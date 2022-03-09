@@ -1,4 +1,5 @@
-
+let playerScore = 0;
+let computerScore = 0;
 
 function computerPlay(){
 
@@ -31,12 +32,24 @@ function playRound(playerSelection, computerSelection)
   if((computerSelection===1 && playerChoice===3)||(computerSelection===2 && playerChoice===1))
   {
     return "You win! " + objects[playerChoice-1] + " beats " + objects[computerSelection-1];
+    playerScore++;
   }else {
     return "You lose! " + objects[computerSelection-1] + " beats " + objects[playerChoice-1];
+    computerScore++;
   }
 }
 
-const playerSelection = "rock";
-const computerSelection = computerPlay();
+function game(){
 
-console.log(playRound(playerSelection, computerSelection));
+  for (let i = 0; i < 4; i++) {
+    let playerInput = prompt("Please enter any choice between Paper, Scissor, Rock");
+    console.log(playRound(playerInput.toLowerCase(), computerPlay()));
+  }
+
+  if (playerScore>computerScore) {
+    console.log("You win the game!");
+  }else {
+    console.log("You've lost :(");
+  }
+
+}
