@@ -23,7 +23,8 @@ function playRound(playerSelection, computerSelection)
     playerChoice = 3;
     break;
     default:
-    alert("Invalid choice");
+    throw new Error("Wrong input");
+    break;
   }
   if(playerChoice===computerSelection){
     return "Draw!";
@@ -31,17 +32,17 @@ function playRound(playerSelection, computerSelection)
 
   if((computerSelection===1 && playerChoice===3)||(computerSelection===2 && playerChoice===1))
   {
-    return "You win! " + objects[playerChoice-1] + " beats " + objects[computerSelection-1];
     playerScore++;
+    return "You win! " + objects[playerChoice-1] + " beats " + objects[computerSelection-1];
   }else {
-    return "You lose! " + objects[computerSelection-1] + " beats " + objects[playerChoice-1];
     computerScore++;
+    return "You lose! " + objects[computerSelection-1] + " beats " + objects[playerChoice-1];
   }
 }
 
 function game(){
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     let playerInput = prompt("Please enter any choice between Paper, Scissor, Rock");
     console.log(playRound(playerInput.toLowerCase(), computerPlay()));
   }
@@ -51,5 +52,6 @@ function game(){
   }else {
     console.log("You've lost :(");
   }
-
 }
+
+game();
