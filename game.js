@@ -27,35 +27,38 @@ function playRound(playerSelection, computerSelection)
     break;
   }
 
-  console.log("****Computer plays = " + objects[computerSelection-1] + "****");
-  console.log("****Player plays = " + objects[playerChoice-1]+ "****");
+  alert("Computer plays = " + objects[computerSelection-1]);
+  alert("Player plays = " + objects[playerChoice-1]);
 
   if(playerChoice===computerSelection){
     return "Draw!";
   }
 
-  if((computerSelection===1 && playerChoice===3)||(computerSelection===2 && playerChoice===1))
+  if((computerSelection===1 && playerChoice===3)||(computerSelection===2 && playerChoice===1)||(computerSelection===3 && playerChoice===2))
   {
-    playerScore++;
-    return "You win! " + objects[playerChoice-1] + " beats " + objects[computerSelection-1];
-  }else {
     computerScore++;
     return "You lose! " + objects[computerSelection-1] + " beats " + objects[playerChoice-1];
+  }else {
+    playerScore++;
+    return "You win! " + objects[playerChoice-1] + " beats " + objects[computerSelection-1];
   }
 }
 
 function game(){
 
+  alert("Hey! Let's play a five round paper, scissors, rock match");
+
   for (let i = 0; i < 5; i++) {
     let playerInput = prompt("Please enter any choice between Paper, Scissors, Rock");
     playerInputLowerCase = playerInput.toLowerCase();
-    console.log(playRound(playerInputLowerCase, computerPlay()));
+    alert(playRound(playerInputLowerCase, computerPlay()));
+    alert("Player score: " + playerScore + " Computer score: " + computerScore);
   }
 
   if (playerScore>computerScore) {
-    console.log("----You win the game!----");
+    alert("You win the game!");
   }else {
-    console.log("----You've lost :(----");
+    alert("You've lost :(");
   }
 }
 
