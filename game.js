@@ -26,6 +26,10 @@ function playRound(playerSelection, computerSelection)
     throw new Error("Wrong input");
     break;
   }
+
+  console.log("****Computer plays = " + objects[computerSelection-1] + "****");
+  console.log("****Player plays = " + objects[playerChoice-1]+ "****");
+
   if(playerChoice===computerSelection){
     return "Draw!";
   }
@@ -43,14 +47,15 @@ function playRound(playerSelection, computerSelection)
 function game(){
 
   for (let i = 0; i < 5; i++) {
-    let playerInput = prompt("Please enter any choice between Paper, Scissor, Rock");
-    console.log(playRound(playerInput.toLowerCase(), computerPlay()));
+    let playerInput = prompt("Please enter any choice between Paper, Scissors, Rock");
+    playerInputLowerCase = playerInput.toLowerCase();
+    console.log(playRound(playerInputLowerCase, computerPlay()));
   }
 
   if (playerScore>computerScore) {
-    console.log("You win the game!");
+    console.log("----You win the game!----");
   }else {
-    console.log("You've lost :(");
+    console.log("----You've lost :(----");
   }
 }
 
