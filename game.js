@@ -1,8 +1,20 @@
 let playerScore = 0;
 let computerScore = 0;
+let turnCount = 0;
+
+const gameTurns = 5;
+const buttons = document.querySelectorAll("button");
+
+function addEventListenerNodes(list)
+{
+  for(let i = 0; i < list.length ; i++)
+  {
+      list[i].addEventListener("click", ()=>playRound(list[i].name, computerPlay()));
+  }
+}
+
 
 function computerPlay(){
-
   //Redefine function that matches numbers like | 1 = Paper | 2 = Scissors | 3 = Rock |
   return Math.floor(Math.random()*3+1);
 }
@@ -12,7 +24,11 @@ function playRound(playerSelection, computerSelection)
   let objects = ["Paper","Scissors","Rock"];
   let playerChoice;
 
-  switch (playerSelection) {
+  //Keeps up with turn count
+  ++turnCount;
+
+ //Computes player choice
+  switch (playerSelection.toLowerCase()) {
     case "paper":
     playerChoice = 1;
     break;
@@ -23,43 +39,61 @@ function playRound(playerSelection, computerSelection)
     playerChoice = 3;
     break;
     default:
-    throw new Error("Wrong input");
-    break;
+    alert("Something went wrong");
   }
 
+  //Shows moves
   alert("Computer plays = " + objects[computerSelection-1]);
   alert("Player plays = " + objects[playerChoice-1]);
-
-  if(playerChoice===computerSelection){
-    return "Draw!";
+  //Results
+    if(playerChoice===computerSelection){
+      if(turnCount==gameTurns)
+      {
+        endGame()
+      }else{
+      alert("Draw!");
+    }
+    return;
   }
 
   if((computerSelection===1 && playerChoice===3)||(computerSelection===2 && playerChoice===1)||(computerSelection===3 && playerChoice===2))
   {
     computerScore++;
-    return "You lose! " + objects[computerSelection-1] + " beats " + objects[playerChoice-1];
+    alert("You lose! " + objects[computerSelection-1] + " beats " + objects[playerChoice-1]);
+    if(turnCount==gameTurns)
+    {
+      endGame()
+    }else{
+      alert("What's your next move?");
+    }
+    return
   }else {
     playerScore++;
-    return "You win! " + objects[playerChoice-1] + " beats " + objects[computerSelection-1];
+    alert("You win! " + objects[playerChoice-1] + " beats " + objects[computerSelection-1]);
+    if(turnCount==gameTurns)
+    {
+      endGame()
+    }else{
+    alert("What's your next move?");
+  }
+    return;
   }
 }
 
-function game(){
+function endGame()
+{
 
-  alert("Hey! Let's play a five round paper, scissors, rock match");
-
-  for (let i = 0; i < 5; i++) {
-    let playerInput = prompt("Please enter any choice between Paper, Scissors, Rock");
-    playerInputLowerCase = playerInput.toLowerCase();
-    alert(playRound(playerInputLowerCase, computerPlay()));
-    alert("Player score: " + playerScore + " Computer score: " + computerScore);
-  }
-
-  if (playerScore>computerScore) {
-    alert("You win the game!");
-  }else {
-    alert("You've lost :(");
+  if(turnCount==gameTurns)
+  {
+    if (playerScore>computerScore) {
+      alert("You win the game!");
+      return;
+    }else {
+      alert("You've lost :(");
+      return;
+    }
   }
 }
 
-game();
+addEventListenerNodes(buttons);
+alert("Hey! Wanna play paper scissors rock? Click on any choice");
