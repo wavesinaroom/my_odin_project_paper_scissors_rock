@@ -4,6 +4,13 @@ let turnCount = 0;
 
 const gameTurns = 5;
 const buttons = document.querySelectorAll("button");
+const log = document.getElementById("game_log");
+const waitMilliseconds = 1500;
+
+function sleep(milliseconds)
+{
+  return new Promise(resolve=>setTimeout(resolve, milliseconds));
+}
 
 function addEventListenerNodes(list)
 {
@@ -19,7 +26,7 @@ function computerPlay(){
   return Math.floor(Math.random()*3+1);
 }
 
-function playRound(playerSelection, computerSelection)
+async function playRound(playerSelection, computerSelection)
 {
   let objects = ["Paper","Scissors","Rock"];
   let playerChoice;
@@ -42,58 +49,65 @@ function playRound(playerSelection, computerSelection)
     alert("Something went wrong");
   }
 
-  //Shows moves
-  alert("Computer plays = " + objects[computerSelection-1]);
-  alert("Player plays = " + objects[playerChoice-1]);
-  //Results
-    if(playerChoice===computerSelection){
-      if(turnCount==gameTurns)
-      {
-        endGame()
-      }else{
-      alert("Draw!");
-    }
-    return;
-  }
+  //Shows moves --> aren't shown in <p>!!
+  log.innerText=("Computer plays = " + objects[computerSelection-1]);
+  await sleep(waitMilliseconds);
+  log.innerText=("Player plays = " + objects[playerChoice-1]);
+  await sleep(waitMilliseconds);
 
-  if((computerSelection===1 && playerChoice===3)||(computerSelection===2 && playerChoice===1)||(computerSelection===3 && playerChoice===2))
-  {
-    computerScore++;
-    alert("You lose! " + objects[computerSelection-1] + " beats " + objects[playerChoice-1]);
+  //Results
+  if(playerChoice===computerSelection){
     if(turnCount==gameTurns)
     {
       endGame()
     }else{
-      alert("What's your next move?");
+      log.innerText="Draw!";
+      await sleep(waitMilliseconds);
+      log.innerText="What's your next move?";
+    }
+    return;
+  }else if((computerSelection===1 && playerChoice===3)||(computerSelection===2 && playerChoice===1)||(computerSelection===3 && playerChoice===2))
+  {
+    computerScore++;
+    log.innerText="You lose! " + objects[computerSelection-1] + " beats " + objects[playerChoice-1];
+    if(turnCount==gameTurns)
+    {
+      endGame()
+    }else{
+      await sleep(waitMilliseconds);
+      log.innerText="What's your next move?";
     }
     return
   }else {
     playerScore++;
-    alert("You win! " + objects[playerChoice-1] + " beats " + objects[computerSelection-1]);
+    log.innerText="You win! " + objects[playerChoice-1] + " beats " + objects[computerSelection-1];
     if(turnCount==gameTurns)
     {
       endGame()
     }else{
-    alert("What's your next move?");
+      await sleep(waitMilliseconds);
+    log.innerText="What's your next move?";
   }
     return;
   }
 }
 
-function endGame()
+async function endGame()
 {
 
   if(turnCount==gameTurns)
   {
     if (playerScore>computerScore) {
-      alert("You win the game!");
+      await sleep(waitMilliseconds);
+      log.innerText="You win the game!";
       return;
     }else {
-      alert("You've lost :(");
+      await sleep(waitMilliseconds);
+      log.innerText="You've lost :(";
       return;
     }
   }
 }
 
 addEventListenerNodes(buttons);
-alert("Hey! Wanna play paper scissors rock? Click on any choice");
+log.innerText="Hey! Wanna play paper scissors rock? Click on any choice";
